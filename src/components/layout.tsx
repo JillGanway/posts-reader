@@ -1,21 +1,27 @@
-
+import { Link, Outlet, useLocation } from "react-router";
 import { ModeToggle } from "@/components/mode-toggle";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="min-h-screen px-6 py-10 sm:px-10">
-      <div className="mx-auto w-full max-w-2xl">
-        <header className="flex items-center justify-between gap-5">
-          <span className="text-lg font-medium tracking-[-0.01em]">
-            Posts
-          </span>
-          <ModeToggle />
-        </header>
+export default function Layout() {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
-        {children}
-      </div>
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b">
+        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
+          {isHome ? (
+            <span className="font-semibold">Posts Reader</span>
+          ) : (
+            <Link to="/" className="font-semibold hover:underline">
+              All posts
+            </Link>
+          )}
+
+          <ModeToggle />
+        </div>
+      </header>
+
+      <Outlet />
     </div>
   );
-};
-
-export default Layout;
+}
