@@ -1,6 +1,8 @@
+
 import axios from "axios";
 import { Link, useParams } from "react-router";
 import { usePost } from "@/features/posts/posts.hooks";
+import CommentList from "@/features/comments/CommentList";
 import { gutter } from "@/lib/layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,19 +74,23 @@ export default function PostDetailsScreen() {
           #{post.id}
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="font-reading text-2xl leading-snug">
-              {post.title}
-            </CardTitle>
-          </CardHeader>
+        <div className="min-w-0 space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-reading text-2xl leading-snug">
+                {post.title}
+              </CardTitle>
+            </CardHeader>
 
-          <CardContent>
-            <p className="whitespace-pre-line leading-7 text-muted-foreground">
-              {post.body}
-            </p>
-          </CardContent>
-        </Card>
+            <CardContent>
+              <p className="whitespace-pre-line leading-7 text-muted-foreground">
+                {post.body}
+              </p>
+            </CardContent>
+          </Card>
+
+          <CommentList postId={post.id} />
+        </div>
       </div>
     </main>
   );
