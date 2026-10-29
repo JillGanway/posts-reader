@@ -14,12 +14,12 @@ type PostProps = {
 
 export function PostRow({ post }: PostProps) {
   return (
-    <Card>
+    <Card className="transition-colors hover:bg-accent/50">
       <CardHeader>
         <CardTitle className="line-clamp-2 text-lg">
           <Link
             to={`/posts/${post.id}`}
-            className="hover:underline"
+            className="rounded-sm hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {post.title}
           </Link>
