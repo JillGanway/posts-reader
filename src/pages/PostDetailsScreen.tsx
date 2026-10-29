@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Link, useParams } from "react-router";
 import { usePost } from "@/features/posts/posts.hooks";
 import { gutter } from "@/lib/layout";
@@ -14,7 +15,8 @@ export default function PostDetailsScreen() {
   const { postId } = useParams();
   const id = Number(postId);
   const validId = Number.isInteger(id) && id > 0;
-  const { data: post, isPending, isError } = usePost(id);
+
+  const { data: post, isPending, isError, error } = usePost(id);
 
   if (!validId) {
     return (
@@ -37,9 +39,19 @@ export default function PostDetailsScreen() {
   }
 
   if (isError || !post) {
+    const isNotFound =
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 404;
+
     return (
       <main className="mx-auto max-w-3xl px-6 py-10">
-        <p className="text-destructive">Could not load this post.</p>
+        <p className="text-destructive">
+          {isNotFound
+            ? "No post at this address"
+            : "Could not load this post."}
+        </p>
+
         <Link to="/" className="underline">
           Back to posts
         </Link>
